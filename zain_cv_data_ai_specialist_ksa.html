@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muhammad Zain Mushtaq – Data & AI Specialist</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:    #1a1a2e;
+    --accent: #1a4a6b;
+    --gold:   #b8860b;
+    --light:  #f7f3ed;
+    --text:   #2c2c2c;
+    --muted:  #5e6a75;
+    --sidebar-bg: #1f3048;
+    --sidebar-text: #ccdae6;
+    --sidebar-sub:  #7a96ac;
+    --sidebar-div:  #2a3f55;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: #ccc9c0;
+    font-family: 'Source Sans 3', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 36px 16px 70px;
+  }
+
+  #printBtn {
+    position: fixed;
+    top: 22px; right: 22px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 13.5px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.22);
+    display: flex; align-items: center; gap: 7px;
+    transition: background .2s;
+  }
+  #printBtn:hover { background: #0e2f46; }
+  #printBtn svg { width:14px; height:14px; fill:#fff; }
+
+  .cv {
+    background: var(--light);
+    width: 100%;
+    max-width: 870px;
+    box-shadow: 0 6px 40px rgba(0,0,0,0.20);
+  }
+
+  .cv-header {
+    background: var(--ink);
+    display: grid;
+    grid-template-columns: 155px 1fr;
+  }
+
+  .photo-col {
+    background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    padding: 30px 18px;
+  }
+  .photo-col img {
+    width: 108px; height: 108px;
+    border-radius: 50%;
+    border: 3px solid var(--gold);
+    object-fit: cover;
+    display: block;
+  }
+  .photo-fallback {
+    width: 108px; height: 108px;
+    border-radius: 50%;
+    border: 3px solid var(--gold);
+    background: #25587e;
+    display: none; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 34px; font-weight: 700; color: #fff;
+  }
+
+  .name-col {
+    padding: 28px 32px 22px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .cv-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px; font-weight: 700;
+    color: #fff; line-height: 1.1;
+    margin-bottom: 5px;
+  }
+  .cv-title {
+    font-size: 12.5px;
+    color: #88b0c8;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .contacts {
+    display: flex; flex-wrap: wrap;
+    gap: 7px 20px;
+  }
+  .contacts a {
+    color: #b8d0e0;
+    text-decoration: none;
+    font-size: 12.5px;
+    display: flex; align-items: center; gap: 5px;
+    transition: color .18s;
+  }
+  .contacts a:hover { color: var(--gold); }
+  .contacts a svg { width:13px; height:13px; fill:currentColor; flex-shrink:0; }
+
+  .cv-body {
+    display: grid;
+    grid-template-columns: 210px 1fr;
+  }
+
+  .sidebar {
+    background: var(--sidebar-bg);
+    padding: 26px 18px;
+    color: var(--sidebar-text);
+  }
+
+  .sb-section { margin-bottom: 24px; }
+
+  .sb-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 10.5px;
+    letter-spacing: 2.2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border-bottom: 1px solid var(--sidebar-div);
+    padding-bottom: 5px;
+    margin-bottom: 11px;
+  }
+
+  .edu-block { margin-bottom: 12px; }
+  .edu-deg {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--sidebar-text);
+    line-height: 1.35;
+  }
+  .edu-school {
+    font-size: 11.5px;
+    color: var(--sidebar-sub);
+    margin-top: 2px;
+  }
+  .edu-meta {
+    font-size: 11px;
+    color: #5a7a90;
+    margin-top: 1px;
+  }
+
+  .cert-block {
+    border-bottom: 1px solid var(--sidebar-div);
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+  }
+  .cert-block:last-child { border-bottom: none; margin-bottom: 0; }
+  .cert-name {
+    font-size: 12px;
+    color: var(--sidebar-text);
+    font-weight: 500;
+    line-height: 1.35;
+  }
+  .cert-issuer {
+    font-size: 11px;
+    color: var(--sidebar-sub);
+    margin-top: 2px;
+  }
+
+  .lang-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 3px 0;
+    font-size: 12.5px;
+  }
+  .lang-name { color: var(--sidebar-text); }
+  .lang-lvl  { font-size: 11px; color: var(--sidebar-sub); }
+
+  .main { padding: 26px 28px; }
+
+  .section { margin-bottom: 22px; }
+
+  .sec-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 11.5px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 4px;
+    margin-bottom: 13px;
+  }
+
+  .summary {
+    font-size: 12.5px;
+    line-height: 1.68;
+    color: var(--text);
+  }
+
+  .skill-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .sk {
+    background: #e6dfd3;
+    color: var(--ink);
+    font-size: 11.5px;
+    font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 2px;
+    border-left: 2px solid var(--gold);
+  }
+
+  .role-tiers { display: flex; flex-direction: column; gap: 7px; }
+  .tier-label {
+    font-size: 10.5px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .role-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .rt {
+    font-size: 11.5px;
+    padding: 3px 9px;
+    border-radius: 2px;
+    font-weight: 500;
+  }
+  .rt-tech  { background: var(--ink); color: #dce8f4; }
+  .rt-biz   { background: #2a4030; color: #b0d4ba; }
+
+  .job { margin-bottom: 17px; }
+  .job-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 3px;
+  }
+  .job-title { font-weight: 700; font-size: 13.5px; color: var(--ink); }
+  .job-date  { font-size: 11.5px; color: var(--muted); }
+  .job-co    {
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 600;
+    margin: 2px 0 6px;
+  }
+  .bullets { list-style: none; }
+  .bullets li {
+    font-size: 12.5px;
+    color: var(--text);
+    line-height: 1.55;
+    padding: 1.5px 0 1.5px 15px;
+    position: relative;
+  }
+  .bullets li::before {
+    content: '▸';
+    position: absolute; left: 0;
+    color: var(--gold);
+    font-size: 9.5px;
+    top: 5px;
+  }
+
+  .project-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-bottom: 5px;
+  }
+
+  .goals-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 18px;
+  }
+  .goal {
+    display: flex;
+    gap: 9px;
+    align-items: flex-start;
+  }
+  .goal-icon {
+    width: 28px; height: 28px;
+    background: var(--ink);
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .goal-icon svg { width:14px; height:14px; fill: var(--gold); }
+  .goal-text { font-size: 12px; color: var(--text); line-height: 1.5; }
+  .goal-text strong { display: block; font-size: 12.5px; color: var(--ink); margin-bottom: 1px; }
+
+  @media print {
+    @page { size: A4; margin: 0; }
+    body   { background:#fff; padding:0; display:block; }
+    #printBtn { display:none !important; }
+    .cv    { max-width:100%; box-shadow:none; }
+    .cv-header, .sidebar, .sk, .rt, .rt-tech, .rt-biz,
+    .goal-icon, .project-badge, .sec-title {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    a { color:inherit !important; text-decoration:none !important; }
+    .contacts a { color:#b8d0e0 !important; }
+  }
+
+  @media (max-width:640px) {
+    .cv-header, .cv-body { grid-template-columns: 1fr; }
+    .photo-col { padding: 20px; }
+    .main, .sidebar { padding: 18px; }
+    .goals-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<button id="printBtn" onclick="window.print()">
+  <svg viewBox="0 0 24 24"><path d="M8 3h8v4H8V3zm-2 4H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2v4h12v-4h2a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2V1H6v6zm10 10H8v-4h8v4zm2-8a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg>
+  Print CV
+</button>
+
+<div class="cv">
+
+  <!-- ══ HEADER ══ -->
+  <div class="cv-header">
+    <div class="photo-col">
+      <img src="zain.jpeg" alt="Muhammad Zain Mushtaq"
+        onerror="this.style.display='none';document.getElementById('pf').style.display='flex';">
+      <div class="photo-fallback" id="pf">ZM</div>
+    </div>
+    <div class="name-col">
+      <div class="cv-name">Muhammad Zain Mushtaq</div>
+      <div class="cv-title">Data &amp; AI Specialist &nbsp;·&nbsp; Machine Learning Engineer &nbsp;·&nbsp; Generative AI Developer</div>
+      <div class="contacts">
+        <a href="https://wa.me/923069750936" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          +92 306 9750936
+        </a>
+        <a href="mailto:mushtaqzain180@gmail.com">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          mushtaqzain180@gmail.com
+        </a>
+        <a href="https://www.linkedin.com/in/muhammad-zain-mushtaq-ab54871b2" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://github.com/ZainMushtaq9" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ BODY ══ -->
+  <div class="cv-body">
+
+    <!-- ── SIDEBAR ── -->
+    <div class="sidebar">
+
+      <div class="sb-section">
+        <div class="sb-title">Education</div>
+        <div class="edu-block">
+          <div class="edu-deg">BS – Information Technology</div>
+          <div class="edu-school">Bahauddin Zakariya University, Multan</div>
+          <div class="edu-meta">2020 – 2025 &nbsp;|&nbsp; GPA 3.51 / 4.00</div>
+          <div class="edu-meta" style="color:#7a96ac;margin-top:3px;font-style:italic;">University Merit Award Recipient</div>
+        </div>
+        <div class="edu-block">
+          <div class="edu-deg">Key Coursework</div>
+          <div class="edu-school" style="line-height:1.7; margin-top:4px;">
+            Data Mining · Machine Learning · Database Systems · Data Structures &amp; Algorithms · Statistics · Linear Algebra · AI &amp; Deep Learning (FYP)
+          </div>
+        </div>
+      </div>
+
+      <div class="sb-section">
+        <div class="sb-title">Certifications</div>
+        <div class="cert-block">
+          <div class="cert-name">Advanced Python &amp; AI Applications (A+)</div>
+          <div class="cert-issuer">NAVTTC – PM Youth Program &nbsp;·&nbsp; Sep 2024</div>
+        </div>
+        <div class="cert-block">
+          <div class="cert-name">Programming Essentials in Python (PCAP)</div>
+          <div class="cert-issuer">Cisco Networking Academy &nbsp;·&nbsp; Jul 2024</div>
+        </div>
+        <div class="cert-block">
+          <div class="cert-name">Designing Effective AI Subagents</div>
+          <div class="cert-issuer">Anthropic &nbsp;·&nbsp; Mar 2026</div>
+        </div>
+        <div class="cert-block">
+          <div class="cert-name">Introduction to Agent Skills</div>
+          <div class="cert-issuer">Anthropic &nbsp;·&nbsp; Mar 2026</div>
+        </div>
+        <div class="cert-block">
+          <div class="cert-name">Claude Cowork: AI Workflow Automation</div>
+          <div class="cert-issuer">Anthropic &nbsp;·&nbsp; Mar 2026</div>
+        </div>
+        <div class="cert-block">
+          <div class="cert-name">Soft Skills &amp; Employability Training</div>
+          <div class="cert-issuer">OEC &amp; ICMPD &nbsp;·&nbsp; Oct 2025</div>
+        </div>
+      </div>
+
+      <div class="sb-section">
+        <div class="sb-title">Languages</div>
+        <div class="lang-row">
+          <span class="lang-name">Urdu</span>
+          <span class="lang-lvl">Native</span>
+        </div>
+        <div class="lang-row">
+          <span class="lang-name">English</span>
+          <span class="lang-lvl">C1 – Proficient</span>
+        </div>
+        <div class="lang-row">
+          <span class="lang-name">Punjabi</span>
+          <span class="lang-lvl">Native</span>
+        </div>
+      </div>
+
+      <div class="sb-section">
+        <div class="sb-title">Core Competencies</div>
+        <div style="font-size:11.5px; color:var(--sidebar-text); line-height:1.85;">
+          ▸ ML Model Development<br>
+          ▸ Generative AI &amp; LLMs<br>
+          ▸ RAG Framework Design<br>
+          ▸ Prompt Engineering<br>
+          ▸ Feature Engineering<br>
+          ▸ Model Validation &amp; Tuning<br>
+          ▸ Data Cleaning &amp; EDA<br>
+          ▸ Production API Deployment<br>
+          ▸ Cross-functional Collaboration
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── MAIN ── -->
+    <div class="main">
+
+      <!-- 1. SUMMARY -->
+      <div class="section">
+        <div class="sec-title">Professional Summary</div>
+        <p class="summary">
+          Data &amp; AI professional with 2+ years of hands-on experience designing, building, and deploying machine learning models and Generative AI solutions in production environments. Proven track record developing AI-driven applications — including LLM-powered chatbots, predictive analytics systems, RAG pipelines, and automation tools — with measurable business impact. Skilled in the full ML lifecycle: data collection and cleaning, feature engineering, model training and validation, performance optimization, and REST API deployment. Currently building enterprise AI solutions at ABIT Consulting and open to contributing to Saudi Arabia's ambitious technology and public sector innovation agenda.
+        </p>
+      </div>
+
+      <!-- 2. SKILLS -->
+      <div class="section">
+        <div class="sec-title">Technical Skills</div>
+        <div class="skill-cloud">
+          <span class="sk">Python (Advanced)</span>
+          <span class="sk">Machine Learning</span>
+          <span class="sk">Deep Learning</span>
+          <span class="sk">TensorFlow &amp; Keras</span>
+          <span class="sk">Scikit-learn</span>
+          <span class="sk">Generative AI / LLMs</span>
+          <span class="sk">RAG Frameworks</span>
+          <span class="sk">LangChain</span>
+          <span class="sk">Prompt Engineering</span>
+          <span class="sk">NLP &amp; Chatbot Development</span>
+          <span class="sk">Feature Engineering</span>
+          <span class="sk">Predictive &amp; Prescriptive Analytics</span>
+          <span class="sk">Pandas &amp; NumPy</span>
+          <span class="sk">FastAPI &amp; Flask (REST APIs)</span>
+          <span class="sk">SQL &amp; Database Systems</span>
+          <span class="sk">Anthropic Claude API</span>
+          <span class="sk">Google Gemini API</span>
+          <span class="sk">Git &amp; GitHub</span>
+        </div>
+      </div>
+
+      <!-- 3. TARGET ROLES -->
+      <div class="section">
+        <div class="sec-title">Target Roles</div>
+        <div class="role-tiers">
+          <div>
+            <div class="tier-label">AI &amp; Data Science Positions</div>
+            <div class="role-tags">
+              <span class="rt rt-tech">Data &amp; AI Specialist</span>
+              <span class="rt rt-tech">ML Engineer</span>
+              <span class="rt rt-tech">AI Solutions Developer</span>
+              <span class="rt rt-tech">Generative AI Engineer</span>
+              <span class="rt rt-tech">Data Scientist</span>
+            </div>
+          </div>
+          <div>
+            <div class="tier-label">Broader Technology Roles</div>
+            <div class="role-tags">
+              <span class="rt rt-biz">AI Product Developer</span>
+              <span class="rt rt-biz">NLP Engineer</span>
+              <span class="rt rt-biz">Python Developer (AI Focus)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. EXPERIENCE -->
+      <div class="section">
+        <div class="sec-title">Work Experience</div>
+
+        <div class="job">
+          <div class="job-head">
+            <span class="job-title">AI &amp; Machine Learning Engineer</span>
+            <span class="job-date">Mar 2025 – Present</span>
+          </div>
+          <div class="job-co">ABIT Consulting (Pvt.) Ltd. &nbsp;·&nbsp; Multan, Pakistan</div>
+          <ul class="bullets">
+            <li>Designed and deployed production-ready AI chatbots using LLMs (Anthropic Claude, Google Gemini) and RAG frameworks, enabling real-time intelligent document retrieval and query resolution for enterprise clients in education and retail sectors.</li>
+            <li>Built and optimized predictive ML models integrated into ERP/MRP workflows via multi-key failover REST APIs (FastAPI), improving automated decision-making efficiency by 20% and reducing manual processing overhead.</li>
+            <li>Developed prompt engineering pipelines and agentic AI workflows that automated repetitive business processes, directly reducing operational costs for three enterprise client deployments.</li>
+            <li>Collected, cleaned, and structured unstructured data from multiple sources; performed feature engineering and model validation to continuously improve accuracy and inference performance across production models.</li>
+            <li>Collaborated with cross-functional product and operations stakeholders to define AI use cases, translate business requirements into model specifications, and deliver scalable solutions aligned with organizational goals.</li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <div class="job-head">
+            <span class="job-title">Freelance Data Scientist &amp; AI Developer</span>
+            <span class="job-date">Sep 2023 – Mar 2025</span>
+          </div>
+          <div class="job-co">Self-Employed &nbsp;·&nbsp; Remote, Pakistan</div>
+          <ul class="bullets">
+            <li>Engineered and deployed predictive ML models for healthcare diagnostics (heart disease, stroke, liver disease, pneumonia, diabetes) using TensorFlow, Keras, and Scikit-learn — achieving up to 99% accuracy validated through cross-validation and held-out test sets.</li>
+            <li>Developed DDoS and SQL injection detection models for cybersecurity clients, applying anomaly detection and classification algorithms on network traffic datasets.</li>
+            <li>Built air-quality forecasting pipelines and sentiment analysis tools for smart-city applications, handling end-to-end data collection, preprocessing, model training, and REST API deployment.</li>
+            <li>Delivered automated client reporting tools powered by data analytics pipelines, saving clients an average of 5+ hours per week in manual reporting effort and improving decision turnaround time.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 5. FEATURED PROJECT -->
+      <div class="section">
+        <div class="sec-title">Featured Project</div>
+        <div class="job">
+          <span class="project-badge">Final Year Project · GPA 4.00 · Merit Award</span>
+          <div class="job-head">
+            <span class="job-title">AIClinix — Multi-Disease AI Diagnostics Platform</span>
+            <span class="job-date">2024 – 2025</span>
+          </div>
+          <div class="job-co">Bahauddin Zakariya University, Multan &nbsp;·&nbsp; Python · TensorFlow · Flask · Scikit-learn</div>
+          <ul class="bullets">
+            <li>Designed and trained separate deep learning and ML classification models for five diseases (heart disease, stroke, liver disease, pneumonia, diabetes), performing full feature engineering, hyperparameter tuning, and model validation — achieving up to 99% predictive accuracy across all diagnostic tasks.</li>
+            <li>Implemented prescriptive analytics logic to provide risk-level outputs alongside predictions, enabling clinicians to act on model recommendations with contextual confidence scores.</li>
+            <li>Deployed all models via a unified Flask REST API with a responsive web dashboard, making the platform accessible to non-technical healthcare staff and demonstrating end-to-end production AI deployment capability.</li>
+          </ul>
+        </div>
+
+        <div class="job" style="margin-top:10px;">
+          <span class="project-badge">Notable Project</span>
+          <div class="job-head">
+            <span class="job-title">Crop Prediction ML System &amp; LexAI NLP Tool</span>
+            <span class="job-date">2023 – 2024</span>
+          </div>
+          <div class="job-co">GitHub Portfolio &nbsp;·&nbsp; Python · Jupyter · Scikit-learn · NLP</div>
+          <ul class="bullets">
+            <li>Built a supervised ML crop prediction model using agricultural dataset features, performing full EDA, feature selection, and model comparison (Random Forest, SVM, Logistic Regression) to identify the highest-accuracy classifier.</li>
+            <li>Developed LexAI, an NLP-powered legal text analysis tool leveraging tokenization, entity recognition, and classification pipelines to extract structured insights from unstructured documents — demonstrating applied NLP in a real-world domain.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 6. CAREER DIRECTION -->
+      <div class="section">
+        <div class="sec-title">Career Direction</div>
+        <div class="goals-grid">
+
+          <div class="goal">
+            <div class="goal-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm1 14.93V17a1 1 0 0 1-2 0v-.07A8.002 8.002 0 0 1 4.07 11H5a1 1 0 0 1 0 2H4.07A8.002 8.002 0 0 1 11 4.07V5a1 1 0 0 1 2 0v.07A8.002 8.002 0 0 1 19.93 11H19a1 1 0 0 1 0-2h.93A8.002 8.002 0 0 1 13 16.93z"/></svg>
+            </div>
+            <div class="goal-text">
+              <strong>Scalable AI for Public Sector</strong>
+              Contribute to Saudi Arabia's Vision 2030 innovation agenda by building robust, production-grade AI systems that deliver measurable value at organizational scale.
+            </div>
+          </div>
+
+          <div class="goal">
+            <div class="goal-icon">
+              <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm-8 11H8v-2h4v2zm4-4H8v-2h8v2z"/></svg>
+            </div>
+            <div class="goal-text">
+              <strong>Generative AI &amp; LLM Applications</strong>
+              Architect and deploy advanced RAG pipelines, chatbots, and recommendation systems that unlock business intelligence from unstructured enterprise data.
+            </div>
+          </div>
+
+          <div class="goal">
+            <div class="goal-icon">
+              <svg viewBox="0 0 24 24"><path d="M3 3h18v2H3V3zm0 8h18v2H3v-2zm0 8h18v2H3v-2z"/></svg>
+            </div>
+            <div class="goal-text">
+              <strong>Predictive &amp; Prescriptive Analytics</strong>
+              Design data pipelines and risk models that transform raw structured and unstructured data into actionable insights supporting strategic decision-making.
+            </div>
+          </div>
+
+          <div class="goal">
+            <div class="goal-icon">
+              <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+            </div>
+            <div class="goal-text">
+              <strong>Cross-functional AI Collaboration</strong>
+              Partner with business, product, and operations stakeholders to translate organizational challenges into AI solutions that are both technically sound and practically deployable.
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- /main -->
+  </div><!-- /body -->
+</div><!-- /cv -->
+
+</body>
+</html>
